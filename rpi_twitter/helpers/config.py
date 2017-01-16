@@ -10,7 +10,7 @@ def load_config(config=None):
     Args:
         config (str): The location of the configuration json file. If none, it
             looks at the $RPI_TWITTER_CONFIG variable, and then
-            ${$XDG_CONFIG_HOME}/rpi-twitter/config, and finally
+            ${XDG_CONFIG_HOME}/rpi-twitter/config, and finally
             ${HOME}/.rpitwitterrc.
     """
     logging.info("Loading config file")
@@ -19,7 +19,7 @@ def load_config(config=None):
         logging.debug("Config file passed in as a parameter.")
         conf_file = config
 
-    # Try the file at RPI_TWITTER_CONFIG
+    # Try the file at $RPI_TWITTER_CONFIG
     if conf_file is None:
         conf = os.getenv("RPI_TWITTER_CONFIG")
         if conf is not None and os.path.isfile(conf):
@@ -42,6 +42,14 @@ def load_config(config=None):
             logging.debug("Config file found at ${HOME}/.rpitwitterrc")
             conf_file = conf
 
+    # If we have failed to find the configuration file, raise an
+    # IOError. Otherwise read_json() will fail with a less helpful
+    # TypeError.
+    if conf_file is None:
+        txt = "Configuration file not found!"
+        logging.error(txt)
+        raise IOError(txt)
+
     # Return the config dictionary
     logging.info("Returning loaded config")
     return read_json(conf_file)
@@ -53,6 +61,7 @@ def read_json(file):
     Args:
         file (str): Location of the file to open.
     """
+    logging.info("Opening JSON file: '{file}'".format(file=file))
     with open(file) as f:
         cont = json.load(f)
 
