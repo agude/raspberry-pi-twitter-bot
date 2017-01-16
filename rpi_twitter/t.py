@@ -4,7 +4,7 @@ import logging
 from rpi_twitter.helpers import authenticate, timestamp
 
 # Library version
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 def post_tweet(contents, add_time_stamp=False, reply_to=None, conf_file=None):
@@ -40,9 +40,15 @@ def post_tweet(contents, add_time_stamp=False, reply_to=None, conf_file=None):
 def main():
     # Command line parsing
     parser = argparse.ArgumentParser(
-        description="Send a tweet"
+        prog="Raspberry Pi Twitter Bot",
+        description="Send a tweet",
     )
     # The list of input files
+    parser.add_argument(
+        '--version',
+        action='version',
+        version='%(prog)s {ver}'.format(ver=__version__),
+    )
     parser.add_argument(
         "tweet",
         type=str,
@@ -57,17 +63,17 @@ def main():
         default=False,
     )
     parser.add_argument(
-        "-c",
-        "--config",
-        help="override the default configuration file",
-        dest="conf_file",
-        default=None,
-    )
-    parser.add_argument(
         "-r",
         "--reply-to",
         help="a twitter handle to start the tweet with",
         dest="reply_to",
+        default=None,
+    )
+    parser.add_argument(
+        "-c",
+        "--config",
+        help="override the default configuration file",
+        dest="conf_file",
         default=None,
     )
 
