@@ -4,7 +4,7 @@ import logging
 from rpi_twitter.helpers import authenticate, timestamp
 
 # Library version
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 def post_tweet(contents, add_time_stamp=False, reply_to=None, conf_file=None):

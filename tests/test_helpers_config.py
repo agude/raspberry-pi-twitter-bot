@@ -2,6 +2,8 @@ import pytest
 
 import json
 import os.path
+import random
+import string
 
 from rpi_twitter.helpers.config import load_config, read_json
 
@@ -16,7 +18,8 @@ def build_fake_config(path, tmpdir):
     CONT = '{ "TEST": ["TEST", "TEST"] }'
 
     # Make the new homedirctory
-    new_home = tmpdir.mkdir("home")
+    random_home = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(8))
+    new_home = tmpdir.mkdir(random_home)
 
     # Get the file name from the path
     root, file = os.path.split(path)
@@ -61,34 +64,90 @@ def test_load_config_argument(tmpdir):
     result = load_config(conf_file)
 
 
-def test_load_config_RPI_TWITTER_CONFIG(tmpdir):
+def test_RPI_TWITTER_CONFIG(tmpdir, monkeypatch):
     home = build_fake_config("config/rpi-twitter/config", tmpdir)
-    os.environ["RPI_TWITTER_CONFIG"] = os.path.join(home, "config", "rpi-twitter", "config")
+
+    # Monkeypatch the environment
+    mock_env = {
+        "HOME": home,
+        "RPI_TWITTER_CONFIG": os.path.join(home, "config", "rpi-twitter", "config"),
+    }
+    monkeypatch.setattr(os, 'environ', mock_env)
+
+    # Test the results
     result = load_config()
     loaded_dict_test(result)
 
 
-def test_load_config_XDG_CONFIG_HOME_set(tmpdir):
+def test_set_XDG_CONFIG_HOME(tmpdir, monkeypatch):
     home = build_fake_config(".config/rpi-twitter/config", tmpdir)
-    os.environ["XDG_CONFIG_HOME"] = os.path.join(home, ".config")
+    # Monkeypatch the environment
+    mock_env = {
+        "HOME": home,
+        "XDG_CONFIG_HOME": os.path.join(home, ".config"),
+    }
+    monkeypatch.setattr(os, 'environ', mock_env)
+
+    # Test the results
     result = load_config()
     loaded_dict_test(result)
 
 
-def test_load_config_XDG_CONFIG_HOME_unset(tmpdir):
+def test_unset_XDG_CONFIG_HOME(tmpdir, monkeypatch):
     home = build_fake_config(".config/rpi-twitter/config", tmpdir)
+
+    # Monkeypatch the environment
+    mock_env = {
+        "HOME": home,
+    }
+    monkeypatch.setattr(os, 'environ', mock_env)
+
+    # Test the results
     result = load_config()
     loaded_dict_test(result)
 
 
-def test_load_config_XDG_CONFIG_HOME_nonstandard(tmpdir):
+def test_nonstandard_XDG_CONFIG_HOME(tmpdir, monkeypatch):
     home = build_fake_config("config/rpi-twitter/config", tmpdir)
-    os.environ["XDG_CONFIG_HOME"] = os.path.join(home, "config")
+
+    # Monkeypatch the environment
+    mock_env = {
+        "HOME": home,
+        "XDG_CONFIG_HOME": os.path.join(home, "config"),
+    }
+    monkeypatch.setattr(os, 'environ', mock_env)
+
+    # Test the results
     result = load_config()
     loaded_dict_test(result)
 
 
-def test_load_config_rc_file(tmpdir):
+def test_rc_file(tmpdir, monkeypatch):
     home = build_fake_config(".rpitwitterrc", tmpdir)
+
+    # Monkeypatch the environment
+    mock_env = {
+        "HOME": home,
+    }
+    monkeypatch.setattr(os, 'environ', mock_env)
+
+    # Test the results
     result = load_config()
     loaded_dict_test(result)
+
+
+def test_load_config_raises(monkeypatch):
+    # Monkeypatch the environment
+    mock_env = {
+        "HOME": "/tmp/",  # Non-sense directory
+    }
+    monkeypatch.setattr(os, 'environ', mock_env)
+
+    # Test the results
+    # With an argument
+    with pytest.raises(IOError):
+        load_config(None)
+
+    # With default locations
+    with pytest.raises(IOError):
+        load_config()
