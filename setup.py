@@ -12,18 +12,18 @@ version = re.search(
 ).group(1)
 
 # Try to import pypandoc to convert the readme, otherwise ignore it
-#try:
-#    import pypandoc
-#    long_description = pypandoc.convert('README.md', 'rst')
-#except ImportError:
-#    long_description = ""
+try:
+    import pypandoc
+    long_description = pypandoc.convert('README.md', 'rst')
+except ImportError:
+    long_description = ""
 
 # Configure the package
 setup(
     name="Raspberry Pi Twitter Bot",
     version=version,
     description="A script for sending tweets from the command line.",
-    #long_description=long_description,
+    long_description=long_description,
     author="Alexander Gude",
     author_email="alex.public.account@gmail.com",
     url="https://github.com/agude/raspberry-pi-twitter-bot",

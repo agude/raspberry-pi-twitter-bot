@@ -4,7 +4,7 @@ import logging
 from rpi_twitter.helpers import authenticate, timestamp
 
 # Library version
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 
 def post_tweet(contents, add_time_stamp=False, reply_to=None, conf_file=None):
@@ -30,8 +30,9 @@ def post_tweet(contents, add_time_stamp=False, reply_to=None, conf_file=None):
     logging.debug("Tweet: '{tweet}'".format(tweet=tweet))
 
     if len(tweet) > 140:
-        logging.warning("Tweet is too long: {tweet}".format(tweet=tweet))
-        return
+        txt = "Tweet is too long: {tweet}".format(tweet=tweet)
+        logging.error(txt)
+        raise ValueError(txt)
 
     logging.info("Calling Twitter API to post Tweet.")
     api.update_status(tweet)
