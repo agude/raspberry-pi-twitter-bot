@@ -4,13 +4,6 @@ import re
 from setuptools import setup, find_packages
 
 
-# Get the version from the main script
-version = re.search(
-    '^__version__\s*=\s*"(.*)"',
-    open("rpi_twitter/t.py").read(),
-    re.M
-).group(1)
-
 # Try to import pypandoc to convert the readme, otherwise ignore it
 try:
     import pypandoc
@@ -21,7 +14,7 @@ except ImportError:
 # Configure the package
 setup(
     name="Raspberry Pi Twitter Bot",
-    version=version,
+    version="0.1.5",
     description="A script for sending tweets from the command line.",
     long_description=long_description,
     author="Alexander Gude",
@@ -51,5 +44,8 @@ setup(
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
-    install_requires=['tweepy'],
+    install_requires=[
+        'tweepy',
+        'pytz',
+    ],
 )
