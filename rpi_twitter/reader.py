@@ -8,7 +8,7 @@ from rpi_twitter.helpers import authenticate
 def get_tweets_by_time(user, start_time=None, end_time=None, count=100, conf_file=None):
     """Get tweets from a user that appeared between a certain time.
 
-    tweets matching start_time < tweet.created_at < end_time will be returned.
+    Tweets matching start_time < tweet.created_at < end_time will be returned.
     *Warning*: We only check their last 100 tweets by default!
 
     Args:

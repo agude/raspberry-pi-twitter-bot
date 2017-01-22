@@ -43,11 +43,6 @@ def main():
     )
     # The list of input files
     parser.add_argument(
-        '--version',
-        action='version',
-        version='%(prog)s {ver}'.format(ver=__version__),
-    )
-    parser.add_argument(
         "tweet",
         type=str,
         help="the content of the tweet"
