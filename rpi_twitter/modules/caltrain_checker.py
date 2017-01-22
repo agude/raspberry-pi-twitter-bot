@@ -31,16 +31,16 @@ def get_train_tweets(target_user, trains, start_hour, end_hour, count=100):
 
     if start_hour is not None:
         start_hour = dt.datetime(now.year, now.month, now.day, start_hour, tzinfo=tzlocal())
-    logging.debug("Start datetime: {dt}".format(dt=str(start)))
+    logging.debug("Start datetime: {dt}".format(dt=str(start_hour)))
     if end_hour is not None:
         end_hour = dt.datetime(now.year, now.month, now.day, end_hour, tzinfo=tzlocal())
-    logging.debug("End datetime: {dt}".format(dt=str(end)))
+    logging.debug("End datetime: {dt}".format(dt=str(end_hour)))
 
     # Get all the tweets
     tweets = get_tweets_by_time(target_user, start_hour, end_hour, count)
     logging.info("Found {n} tweets".format(n=str(len(tweets))))
 
-    # Seperate out tweets mentioning my trains
+    # Separate out tweets mentioning my trains
     check_tweets = []
     for tweet in tweets:
         text = tweet.text.encode("ascii", "ignore")

@@ -14,7 +14,7 @@ except ImportError:
 # Configure the package
 setup(
     name="Raspberry Pi Twitter Bot",
-    version="0.2.0",
+    version="0.2.1",
     description="A script for sending tweets from the command line.",
     long_description=long_description,
     author="Alexander Gude",
@@ -25,7 +25,8 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            't=rpi_twitter.t:main'
+            't=rpi_twitter.t:main',
+            'caltrain-checker=rpi_twitter.modules.caltrain_checker:main',
         ],
     },
     classifiers=[
