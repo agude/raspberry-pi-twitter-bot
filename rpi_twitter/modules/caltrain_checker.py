@@ -129,8 +129,22 @@ def main():
         dest="conf_file",
         default=None,
     )
+    parser.add_argument(
+        "--log",
+        help="set the logging level, defaults to WARNING",
+        dest="log_level",
+        default=logging.WARNING,
+        choices=[
+            'DEBUG',
+            'INFO',
+            'WARNING',
+            'ERROR',
+            'CRITICAL',
+        ],
+    )
 
     args = parser.parse_args()
+    logging.basicConfig(level=args.log_level)
 
     logging.debug("Arguments: {args}".format(args=args))
 
