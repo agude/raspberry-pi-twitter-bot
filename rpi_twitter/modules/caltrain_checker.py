@@ -45,6 +45,12 @@ def get_train_tweets(target_user, trains, start_hour, end_hour, count=100):
     for tweet in tweets:
         text = tweet.text.encode("ascii", "ignore")
         logging.debug("Tweet: {t}".format(t=text))
+
+        # Reject Retweets and replies
+        if tweet.retweeted or tweet.in_reply_to_status_id is not None:
+            logging.debug("Rejecting Tweet as retweet or reply.")
+            continue
+
         for train in trains:
             if train in text:
                 logging.debug("Found a match for train: {train}".format(train=train))
