@@ -61,5 +61,5 @@ A custom config to override the default file can be specified with `-c`:
 
 `t -c ~/myconfig 'Tweet tweet'`
 
-If you try to send a tweet that is too long, an `ValueError` and not post the
-Tweet.
+If you try to send a tweet that is too long, the program raises an
+`ValueError` and does not post the Tweet.
