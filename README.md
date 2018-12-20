@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/agude/raspberry-pi-twitter-bot.svg?branch=master)](https://travis-ci.org/agude/raspberry-pi-twitter-bot)
 
-Raspberry Pi Twitter Bot (RPTB) is a commandland utility to send Tweets to
+Raspberry Pi Twitter Bot (RPTB) is a commandline utility to send Tweets to
 Twitter using Python and [Tweepy](https://github.com/tweepy/tweepy).
 
 ## Installation
