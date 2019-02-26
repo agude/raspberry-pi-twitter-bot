@@ -26,7 +26,7 @@ def post_tweet(contents, add_time_stamp=False, reply_to=None, conf_file=None):
     tweet = reply + time_stamp + contents
     logging.debug("Tweet: '{tweet}'".format(tweet=tweet))
 
-    if len(tweet) > 140:
+    if len(tweet) > 280:
         txt = "Tweet is too long: {tweet}".format(tweet=tweet)
         logging.error(txt)
         raise ValueError(txt)
