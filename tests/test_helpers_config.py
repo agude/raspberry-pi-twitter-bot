@@ -10,7 +10,7 @@ from rpi_twitter.helpers.config import load_config, read_json
 
 # Some helper functions for the tests
 def loaded_dict_test(result):
-    assert result.keys() == ["TEST"]
+    assert list(result.keys()) == ["TEST"]
     assert result["TEST"] == ["TEST", "TEST"]
 
 
