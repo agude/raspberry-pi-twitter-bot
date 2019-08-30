@@ -14,7 +14,7 @@ except ImportError:
 # Configure the package
 setup(
     name="Raspberry Pi Twitter Bot",
-    version="0.3.1",
+    version="0.4.0",
     description="A script for sending tweets from the command line.",
     long_description=long_description,
     author="Alexander Gude",
@@ -30,7 +30,7 @@ setup(
         ],
     },
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Console",
         "Intended Audience :: System Administrators",
         "License :: OSI Approved :: MIT License",
@@ -38,6 +38,9 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "Topic :: Utilities",
     ],
     keywords=[
